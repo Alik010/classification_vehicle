@@ -1,0 +1,26 @@
+_target_: src.data.vehicle_datamodule.VehicleDataModule
+
+batch_size: 32 # Needs to be divisible by the number of devices (e.g., if in a distributed setup)
+
+path_annotation_train: "dataset/annotations/val.json"
+path_annotation_val: "dataset/annotations/val.json"
+path_annotation_test: "dataset/annotations/test.json"
+path_images_data: "dataset/images"
+
+SIZE_IMAGE: (128,128)
+num_workers: 8
+pin_memory: True
+
+labels:
+  bus: 0
+  car: 1
+  minibus: 2
+  minitruck: 3
+  trailer: 4
+  truck: 5
+  truck_trailer: 6
+#  motorhome: 7
+
+augmentation_path: "./configs/data/augmentation.yaml"
+
+

@@ -1,0 +1,57 @@
+_target_: src.models.vehicle_module.VehicleModule
+
+#optimizer:
+#  _target_: torch.optim.AdamW
+#  _partial_: true
+#  lr: 0.01
+#  weight_decay: 0.0
+
+optimizer:
+  _target_: src.optimizer.sophia.SophiaG
+  _partial_: true
+  lr: 0.0002
+  betas:
+    - 0.965
+    - 0.99
+  rho: 0.04
+  weight_decay: 0.1
+
+
+#criterion:
+#  _target_: torch.nn.CrossEntropyLoss
+#  reduction: 'mean'
+
+criterion:
+  _target_: timm.loss.LabelSmoothingCrossEntropy
+
+#criterion:
+#  _target_: src.loss_func.focal_loss.FocalLoss
+#  gamma: 2
+#  weight: [0.087,0.004,0.108,0.043,0.391,0.070,0.297]
+#  reduction: 'mean'
+
+scheduler:
+  _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+  _partial_: true
+  mode: max
+  factor: 0.5
+  patience: 5
+
+#net:
+#  _target_: src.models.components.mobilenetv4.MobileNetV4
+#  model: 'MobileNetV4ConvSmall'  # MobileNetV4ConvSmall MobileNetV4ConvMedium MobileNetV4ConvLarge MobileNetV4HybridMedium  MobileNetV4HybridLarge
+#  num_classes: 7
+
+net:
+  _target_: src.models.components.mobilenetv4_hug.MobileNetV4
+  model_name: 'mobilenetv4_conv_small.e2400_r224_in1k'
+  num_classes: 7
+
+#net:
+#  _target_: src.models.components.mobilenetv2.MobileNetV2
+#  out_features: 7
+
+# compile model for faster training with pytorch 2.0
+compile: false
+
+num_classes: 7
